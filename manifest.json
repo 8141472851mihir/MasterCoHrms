@@ -1,0 +1,15 @@
+{
+  "name": "MyCo Admin Panel",
+  "short_name": "MyCo",
+  "start_url": "/apAdmin/index.php",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "img/logo.png",
+      "sizes": "511x511",
+      "type": "image/png"
+    }
+  ]
+}

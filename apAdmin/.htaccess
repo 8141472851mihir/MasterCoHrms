@@ -1,0 +1,5 @@
+RewriteEngine On
+
+RewriteRule ^/?([a-zA-Z0-9_-]+)$ dashboard.php?f=$1 [L,QSA]
+
+

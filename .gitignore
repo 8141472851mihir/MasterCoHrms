@@ -1,0 +1,9 @@
+img/
+sync.sh
+.env
+apAdmin/fcm_file/your-service-account.json
+apAdmin/fcm_file/*-service-account.json
+docs/
+img/menu_file_*
+.cursor/
+sql

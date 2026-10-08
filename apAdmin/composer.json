@@ -1,0 +1,14 @@
+{
+    "require": {
+      "google/apiclient": "^2.18",
+      "phpmailer/phpmailer": "^6.10",
+      "kreait/firebase-php": "^7.22",
+      "async-aws/s3": "^2.10",
+      "symfony/http-client": "^6.4"
+    },
+    "config": {
+      "platform": {
+        "php": "8.1.0"
+      }
+    }
+  }

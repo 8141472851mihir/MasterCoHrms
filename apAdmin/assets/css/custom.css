@@ -1,0 +1,317 @@
+.cursor-pointer{
+	cursor: pointer !important;
+}
+.preview_close_btn{
+	font-size:12px;
+	position: absolute;
+	top: 0;
+	right: 10px;
+}
+.preview_img{
+	max-width: 75px; 
+	max-height:75px;
+}
+/*jainit changes start*/
+.rowsize{
+	width: 600px !important;
+	text-wrap:wrap !important;
+}
+.namerowsize{
+	width: 50px !important;
+	text-wrap:wrap !important;
+}
+.icon{
+	cursor: move;
+}
+/*jainit changes end*/
+/*done*/
+
+.output{
+    position: relative;
+    width: 40px;
+	padding-top: 10px;
+    height: 40px;
+    margin-left: 50%;
+    font-family: cursive;
+    font-size: 16px;
+    line-height: 20px;
+    color: #6441A5;
+    text-align: center;
+   	background: #F5F9FF;
+		border: 2px solid #6441A5; 
+    border-radius: 50% 50% 50% 0%;
+    -webkit-transition: opacity .3s ease-in-out 0s;
+    transition: opacity .3s ease-in-out 0s;
+}
+#range{
+	--active: #5628EE;
+    --value: #fff;
+    --line: #CDD9ED;
+    touch-action: none;
+	 -webkit-appearance: none;
+ 	 appearance: none;
+    user-select: none;
+    width: 520px;
+    height: 2px;
+    border-radius: 1px;
+    background: var(--line);
+    position: relative;
+	
+		&::-webkit-slider-thumb{
+		 -webkit-appearance: none; 
+  		appearance: none;
+  		width: 15px;
+  		height: 15px; 
+			background: #F5F9FF;
+			border: 2px solid #6441A5; 
+  		cursor: pointer; 
+			border-radius: 18px;
+			transition: .5s ease;
+			
+			&:focus , &:active{
+				padding: 8px;
+			}
+	}
+	
+	
+	&:focus , &:active{
+		outline: none;
+	}
+}
+
+.dataTables_processing {
+    background: transparent !important;
+    border: none;
+    box-shadow: none;
+    z-index: 9999; 
+}
+html, body {
+  overflow-x: hidden; 
+  overflow-y: auto;
+}
+
+.no-search-box input{
+  display: none !important;
+}
+
+tfoot {
+  display: table-header-group;
+}
+
+.datatable_search{
+  width: 100% !important;
+}
+
+.modal-dialog {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: calc(100% - 1rem);
+  margin: 0.5rem auto !important;
+}
+
+.modal-dialog .modal-content {
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    min-height: calc(100% - 3.5rem);
+    margin: 1.75rem auto !important;
+  }
+}
+
+.calling-empty {
+  color: #6c757d;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.calling-number-table {
+  background: #fff;
+  margin-bottom: 10px;
+}
+
+.calling-number-table thead th {
+  background: #f8f9fa;
+  font-size: 12px;
+  font-weight: 600;
+  color: #495057;
+  white-space: nowrap;
+  vertical-align: middle;
+  border-bottom-width: 1px;
+}
+
+.calling-number-table td {
+  vertical-align: top;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.calling-number-table .form-control,
+.calling-number-table .btn {
+  font-size: 13px;
+}
+
+.calling-number-table .select2-container {
+  width: 100% !important;
+}
+
+.calling-number-table .calling-date-picker {
+  background: #fff;
+  cursor: pointer;
+}
+
+.calling-number-text {
+  font-weight: 600;
+  color: #212529;
+}
+
+.calling-meta {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #6c757d;
+}
+
+.calling-action-cell {
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
+.calling-past-panel {
+  margin-top: 14px;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.calling-past-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 0;
+  background: #fff;
+  padding: 9px 12px;
+  font-size: 13px;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.calling-past-toggle:hover {
+  background: #f8f9fa;
+}
+
+.calling-past-toggle:focus {
+  outline: none;
+}
+
+.calling-past-caret {
+  color: #6c757d;
+  transition: transform 0.15s ease;
+}
+
+.calling-past-panel.is-open .calling-past-caret {
+  transform: rotate(180deg);
+}
+
+.calling-past-body {
+  display: none;
+  padding: 0 12px 12px;
+}
+
+.calling-past-panel.is-open .calling-past-body {
+  display: block;
+}
+
+.calling-legend {
+  font-size: 12px;
+  color: #6c757d;
+  margin: 0 0 8px;
+}
+
+.calling-mobile-row-past td {
+  background: #fff;
+}
+
+.calling-mobile-row label.error,
+.calling-number-table label.calling-error {
+  display: block;
+  margin: 4px 0 0;
+  max-width: 100%;
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 500;
+  color: #dc3545;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.daterangepicker.calling-daterangepicker {
+  z-index: 99999 !important;
+  padding: 12px 14px 8px;
+  border: 1px solid #dfe3e8;
+  border-radius: 8px;
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.12);
+}
+
+.daterangepicker.calling-daterangepicker .drp-calendar.left,
+.daterangepicker.calling-daterangepicker .drp-calendar.single {
+  padding: 4px 8px 0;
+}
+
+.daterangepicker.calling-daterangepicker .calendar-table th,
+.daterangepicker.calling-daterangepicker .calendar-table td {
+  min-width: 36px;
+  width: 36px;
+  height: 32px;
+  line-height: 32px;
+  font-size: 13px;
+}
+
+.daterangepicker.calling-daterangepicker select.monthselect,
+.daterangepicker.calling-daterangepicker select.yearselect,
+.daterangepicker.calling-daterangepicker select.hourselect,
+.daterangepicker.calling-daterangepicker select.minuteselect,
+.daterangepicker.calling-daterangepicker select.secondselect {
+  height: 34px;
+  padding: 4px 8px;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 13px;
+}
+
+.daterangepicker.calling-daterangepicker select.hourselect,
+.daterangepicker.calling-daterangepicker select.minuteselect,
+.daterangepicker.calling-daterangepicker select.secondselect {
+  width: 68px;
+  margin: 0 3px;
+}
+
+.daterangepicker.calling-daterangepicker .calendar-time {
+  margin-top: 10px;
+  padding-top: 8px;
+  line-height: 34px;
+}
+
+.daterangepicker.calling-daterangepicker .drp-selected {
+  display: none;
+}
+
+.daterangepicker.calling-daterangepicker .drp-buttons {
+  padding: 10px 8px 4px;
+  border-top: 1px solid #edf0f2;
+}
+
+.daterangepicker.calling-daterangepicker .drp-buttons .btn {
+  min-width: 76px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: 0;
+}
