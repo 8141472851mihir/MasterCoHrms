@@ -6222,6 +6222,3 @@ $(document).ready(function () {
     $(document).on('change keyup blur', '#domain_select, #end_url_name', updateSubDomain);
     updateSubDomain();
 });
-
-
-});
