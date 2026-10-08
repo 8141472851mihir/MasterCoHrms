@@ -89,33 +89,7 @@ return [
              */
 
             'database' => [
-
-                /*
-                 * In most of the cases the project ID defined in the credentials file
-                 * determines the URL of your project's Realtime Database. If the
-                 * connection to the Realtime Database fails, you can override
-                 * its URL with the value you see at
-                 *
-                 * https://console.firebase.google.com/u/1/project/_/database
-                 *
-                 * Please make sure that you use a full URL like, for example,
-                 * https://my-project-id.firebaseio.com
-                 */
-
                 'url' => env('FIREBASE_DATABASE_URL'),
-
-                /*
-                 * As a best practice, a service should have access to only the resources it needs.
-                 * To get more fine-grained control over the resources a Firebase app instance can access,
-                 * use a unique identifier in your Security Rules to represent your service.
-                 *
-                 * https://firebase.google.com/docs/database/admin/start#authenticate-with-limited-privileges
-                 */
-
-                // 'auth_variable_override' => [
-                //     'uid' => 'my-service-worker'
-                // ],
-
             ],
 
             'dynamic_links' => [
