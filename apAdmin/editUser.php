@@ -13,12 +13,6 @@
   }
 
 $is_developer = $userDetails['is_developer'];
-$allowedPlatformRaw = !empty($userDetails['allowed_platforms']) ? $userDetails['allowed_platforms'] : ($userDetails['platform'] ?? '');
-$allowedProductsRaw = $userDetails['allowed_products'] ?? '';
-$developerPermissionsRaw = $userDetails['developer_permissions'] ?? '';
-$platformData = ($allowedPlatformRaw !== '') ? array_values(array_filter(array_map('trim', explode(",", (string)$allowedPlatformRaw)), 'strlen')) : [];
-$allowedProductsData = ($allowedProductsRaw !== '') ? array_values(array_filter(array_map('trim', explode(",", (string)$allowedProductsRaw)), 'strlen')) : [];
-$developerPermissionsData = ($developerPermissionsRaw !== '') ? array_values(array_filter(array_map('trim', explode(",", (string)$developerPermissionsRaw)), 'strlen')) : [];
 
 $boundUserId = isset($userDetails['user_id']) ? $userDetails['user_id'] : '';
 $mycoEmployees = [];
@@ -145,42 +139,6 @@ if (isset($empResponse['employees']) && is_array($empResponse['employees'])) {
                     <option value="0" <?php if($is_developer == 0){ echo "selected"; } ?>>No</option>
                   </select>
                 </div>
-                <label for="allowed_products" class="col-sm-2 col-form-label" id="allowed_products_label" style="<?php if($is_developer == 1){ echo 'display: block'; }else{ echo 'display: none'; } ?>">Allowed Products</label>
-                <div class="col-sm-4 allowed-products-wrap" style="<?php if($is_developer == 1){ echo 'display: block'; }else{ echo 'display: none'; } ?>">
-                  <select class="form-control multiple-select" id="allowed_products" name="allowed_products[]" multiple="multiple">
-                    <?php
-                    $developerProducts = array(
-                      '1' => 'MyCo HRMS',
-                      '2' => 'MyCo CRM',
-                      '3' => 'Smart Society',
-                      '4' => 'My Association',
-                      '5' => 'Other',
-                      '6' => 'MyCo White Label',
-                    );
-                    foreach ($developerProducts as $productId => $productName) { ?>
-                      <option value="<?php echo htmlspecialchars($productId); ?>" <?php if(in_array((string)$productId, $allowedProductsData) || in_array($productName, $allowedProductsData)){echo "selected";} ?>><?php echo htmlspecialchars($productName); ?></option>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="allowed_platforms" class="col-sm-2 col-form-label" id="allowed_platforms_label" style="<?php if($is_developer == 1){ echo 'display: block'; }else{ echo 'display: none'; } ?>">Allowed Platforms</label>
-                <div class="col-sm-4 allowed-platforms-wrap" style="<?php if($is_developer == 1){ echo 'display: block'; }else{ echo 'display: none'; } ?>">
-                  <select class="form-control multiple-select" id="allowed_platforms" name="allowed_platforms[]" multiple="multiple">
-                    <option value="0" <?php if(in_array('0',$platformData)){echo "selected";}?>>Backend/Api</option>
-                    <option value="1" <?php if(in_array('1',$platformData)){echo "selected";}?>>Frontend/web</option>
-                    <option value="2" <?php if(in_array('2',$platformData)){echo "selected";}?>>App</option>
-                    <option value="4" <?php if(in_array('4',$platformData)){echo "selected";}?>>QA</option>
-                  </select>
-                </div>
-                <label for="developer_permissions" class="col-sm-2 col-form-label" id="developer_permissions_label" style="<?php if($is_developer == 1){ echo 'display: block'; }else{ echo 'display: none'; } ?>">Developer Permissions</label>
-                <div class="col-sm-4 developer-permissions-wrap" style="<?php if($is_developer == 1){ echo 'display: block'; }else{ echo 'display: none'; } ?>">
-                  <select class="form-control multiple-select" id="developer_permissions" name="developer_permissions[]" multiple="multiple">
-                    <option value="0" <?php if(in_array('0',$developerPermissionsData, true)){echo "selected";}?>>Change Patch Status &amp; Date</option>
-                    <option value="1" <?php if(in_array('1',$developerPermissionsData, true)){echo "selected";}?>>Change Developer</option>
-                    <option value="2" <?php if(in_array('2',$developerPermissionsData, true)){echo "selected";}?>>Change Development Status</option>
-                  </select>
-                </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Bind MyCo User</label>
@@ -231,17 +189,6 @@ if (isset($empResponse['employees']) && is_array($empResponse['employees'])) {
 <script src="assets/js/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-  function toggleDeveloperFields() {
-    var isDeveloper = $('#is_developer').val();
-    var show = (isDeveloper == '1');
-    $('#allowed_products_label, #allowed_platforms_label, #developer_permissions_label').toggle(show);
-    $('.allowed-products-wrap, .allowed-platforms-wrap, .developer-permissions-wrap').toggle(show);
-    $('#allowed_products, #allowed_platforms, #developer_permissions').prop('required', false);
-    if (!show) {
-      $('#allowed_products, #allowed_platforms, #developer_permissions').val(null).trigger('change');
-    }
-  }
-
   function syncMycoUserBindFields() {
     var $opt = $('#myco_user_bind option:selected');
     if (!$opt.val()) {
@@ -254,8 +201,6 @@ $(document).ready(function(){
     $('#bind_department_name').val($opt.data('department-name') || '');
   }
 
-  $("#is_developer").change(toggleDeveloperFields);
-  toggleDeveloperFields();
   $('#myco_user_bind').on('change', function () {
     syncMycoUserBindFields();
     if ($(this).length && typeof $(this).valid === 'function') {

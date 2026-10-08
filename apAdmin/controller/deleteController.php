@@ -92,41 +92,6 @@ if(isset($_POST) && !empty($_POST) )//it can be $_GET doesn't matter
   }
 
 
-   if($_POST['deleteValue']=="deletePackage") {
-    $idCount = count($ids);
-    for ($i=0; $i <$idCount ; $i++) { 
-      $q=$d->delete("gatekeeper_app_access","app_id='$ids[$i]'");
-    }
-      if($q>0) {
-        echo 1;
-        $d->insert_log("$society_id","$bms_admin_id","$created_by","Package Deleted");
-        $_SESSION['msg']="Package Deleted.";
-        // header("location:../categories");
-      } else {
-        echo 0;
-        $_SESSION['msg1']="Something Wrong";
-        // header("location:../categories");
-      }
-  }
-
-  if($_POST['deleteValue']=="deletePackageReq") {
-    $idCount = count($ids);
-    for ($i=0; $i <$idCount ; $i++) { 
-      $q=$d->delete("gatekeeper_app_access_request","requestId='$ids[$i]'");
-    }
-      if($q>0) {
-        echo 1;
-        $d->insert_log("$society_id","$bms_admin_id","$created_by","Package request Deleted");
-        $_SESSION['msg']="request Deleted.";
-        // header("location:../categories");
-      } else {
-        echo 0;
-        $_SESSION['msg1']="Something Wrong";
-        // header("location:../categories");
-      }
-  }
-
-
   if($_POST['deleteValue']=="deleteSessionlog") {
     $idCount = count($ids);
     for ($i=0; $i <$idCount ; $i++) { 
@@ -250,25 +215,6 @@ if(isset($_POST) && !empty($_POST) )//it can be $_GET doesn't matter
         // header("location:../categories");
       }
   }  
-
-  if($_POST['deleteValue']=="deletePoll") {
-    $idCount = count($ids);
-    for ($i=0; $i <$idCount ; $i++) { 
-      $q=$d->delete("voting_master","voting_id='$ids[$i]' AND society_id='$society_id'");
-      $q=$d->delete("voting_option_master","voting_id='$ids[$i]'");
-      $q=$d->delete("voting_result_master","voting_id='$ids[$i]'");
-    }
-      if($q>0) {
-        echo 1;
-        $d->insert_log("$society_id","$bms_admin_id","$created_by","Poll  Deleted");
-        $_SESSION['msg']="Poll  Deleted.";
-        // header("location:../categories");
-      } else {
-        echo 0;
-        $_SESSION['msg1']="Something Wrong";
-        // header("location:../categories");
-      }
-  }
 
    if($_POST['deleteValue']=="deleteDocumentType") {
     $idCount = count($ids);

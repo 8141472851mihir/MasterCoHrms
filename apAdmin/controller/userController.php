@@ -225,24 +225,6 @@ if (isset($_POST) && !empty($_POST)) //it can be $_GET doesn't matter
     $m->set_data('primary_language_id', $primary_language_id);
     $m->set_data('default_time_zone', $default_time_zone);
     $m->set_data('is_developer', $is_developer);
-    $allowedProductsData = '';
-    $allowedPlatformsData = '';
-    $developerPermissionsData = '';
-    if ($is_developer == 1) {
-      if (isset($_POST['allowed_products']) && is_array($_POST['allowed_products'])) {
-        $allowedProductsData = implode(",", $_POST['allowed_products']);
-      }
-      if (isset($_POST['allowed_platforms']) && is_array($_POST['allowed_platforms'])) {
-        $allowedPlatformsData = implode(",", $_POST['allowed_platforms']);
-      }
-      if (isset($_POST['developer_permissions']) && is_array($_POST['developer_permissions'])) {
-        $developerPermissionsData = implode(",", $_POST['developer_permissions']);
-      }
-    }
-    $m->set_data('allowed_products', $allowedProductsData);
-    $m->set_data('allowed_platforms', $allowedPlatformsData);
-    $m->set_data('developer_permissions', $developerPermissionsData);
-    $m->set_data('platform', $allowedPlatformsData);
 
     $bindUserId = isset($_POST['user_id']) ? trim((string)$_POST['user_id']) : '';
     $bindUserFullName = '';
@@ -278,10 +260,6 @@ if (isset($_POST) && !empty($_POST)) //it can be $_GET doesn't matter
       'primary_language_id' => $m->get_data('primary_language_id'),
       'default_time_zone' => $m->get_data('default_time_zone'),
       'is_developer' => $m->get_data('is_developer'),
-      'allowed_products' => $m->get_data('allowed_products'),
-      'allowed_platforms' => $m->get_data('allowed_platforms'),
-      'developer_permissions' => $m->get_data('developer_permissions'),
-      'platform' => $m->get_data('platform'),
       'user_id' => $m->get_data('user_id'),
       'user_full_name' => $m->get_data('user_full_name'),
       'branch_name' => $m->get_data('branch_name'),
@@ -367,24 +345,6 @@ if (isset($_POST) && !empty($_POST)) //it can be $_GET doesn't matter
     $m->set_data('primary_language_id', $primary_language_id);
     $m->set_data('default_time_zone', $default_time_zone);
     $m->set_data('is_developer', $is_developer);
-    $allowedProductsData = '';
-    $allowedPlatformsData = '';
-    $developerPermissionsData = '';
-    if ($is_developer == 1) {
-      if (isset($_POST['allowed_products']) && is_array($_POST['allowed_products'])) {
-        $allowedProductsData = implode(",", $_POST['allowed_products']);
-      }
-      if (isset($_POST['allowed_platforms']) && is_array($_POST['allowed_platforms'])) {
-        $allowedPlatformsData = implode(",", $_POST['allowed_platforms']);
-      }
-      if (isset($_POST['developer_permissions']) && is_array($_POST['developer_permissions'])) {
-        $developerPermissionsData = implode(",", $_POST['developer_permissions']);
-      }
-    }
-    $m->set_data('allowed_products', $allowedProductsData);
-    $m->set_data('allowed_platforms', $allowedPlatformsData);
-    $m->set_data('developer_permissions', $developerPermissionsData);
-    $m->set_data('platform', $allowedPlatformsData);
 
     $bindUserId = isset($_POST['user_id']) ? trim((string)$_POST['user_id']) : '';
     $bindUserFullName = '';
@@ -420,10 +380,6 @@ if (isset($_POST) && !empty($_POST)) //it can be $_GET doesn't matter
       'primary_language_id' => $m->get_data('primary_language_id'),
       'default_time_zone' => $m->get_data('default_time_zone'),
       'is_developer' => $m->get_data('is_developer'),
-      'allowed_products' => $m->get_data('allowed_products'),
-      'allowed_platforms' => $m->get_data('allowed_platforms'),
-      'developer_permissions' => $m->get_data('developer_permissions'),
-      'platform' => $m->get_data('platform'),
       'user_id' => $m->get_data('user_id'),
       'user_full_name' => $m->get_data('user_full_name'),
       'branch_name' => $m->get_data('branch_name'),

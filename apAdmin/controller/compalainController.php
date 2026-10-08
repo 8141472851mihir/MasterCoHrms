@@ -34,48 +34,10 @@ if(isset($changeStausComp)) {
     $q=$d->update("complains_master",$a1,"complain_id='$complain_id'");
 
 
-    if ($complain_review_msg!='' || $_FILES["complains_track_img"]!='' || $_FILES["complains_track_voice"]!='') {
-
-      if(file_exists($_FILES["complains_track_img"]["tmp_name"])) {
-
-        $temp = explode(".", $_FILES["complains_track_img"]["name"]);
-        $complains_track_img = 'Complaint_'.round(microtime(true)) . '.' . end($temp);
-        move_uploaded_file($_FILES["complains_track_img"]["tmp_name"], "../../img/complain/".$complains_track_img);
-      }
-      
-      if(file_exists($_FILES["complains_track_voice"]["tmp_name"])) {
-        $temp = explode(".", $_FILES["complains_track_voice"]["name"]);
-        $complains_track_voice = 'ComplaintA_'.round(microtime(true)) . '.' . end($temp);
-        move_uploaded_file($_FILES["complains_track_voice"]["tmp_name"], "../../img/complain/".$complains_track_voice);
-      }
-
-   
-                 if ($complain_status==0) { $cStatus="OPEN";} 
-                 elseif ($complain_status==1) { $cStatus="CLOSED";  } 
-                 elseif ($complain_status==2) { $cStatus="REOPEN";} 
-                 elseif ($complain_status==3) { $cStatus="In Progress";}
-
-      $m->set_data('complain_id',$complain_id);
-      $m->set_data('society_id',$society_id);
-      $m->set_data('complains_track_msg',$complain_review_msg);
-      $m->set_data('complains_track_img',$complains_track_img);
-      $m->set_data('complains_track_voice',$complains_track_voice);
-      $m->set_data('admin_id',$bms_admin_id);
-      $m->set_data('complains_track_date_time',date('Y-m-d H:i:s'));
-
-      $a2= array (
-        'complains_track_by'=> 1,
-        'society_id'=> $m->get_data('society_id'),
-        'complain_id'=> $m->get_data('complain_id'),
-        'complains_track_msg'=> $m->get_data('complains_track_msg'),
-        'complains_track_img'=> $m->get_data('complains_track_img'),
-        'complains_track_voice'=> $m->get_data('complains_track_voice'),
-        'admin_id'=> $m->get_data('admin_id'),
-        'complains_track_date_time'=> $m->get_data('complains_track_date_time'),
-         'complaint_status_view' => $cStatus,
-      );
-      $d->insert("complains_track_master",$a2);
-    }
+    if ($complain_status==0) { $cStatus="OPEN";}
+    elseif ($complain_status==1) { $cStatus="CLOSED";  }
+    elseif ($complain_status==2) { $cStatus="REOPEN";}
+    elseif ($complain_status==3) { $cStatus="In Progress";}
   if($q==TRUE) {
 
 
@@ -89,17 +51,6 @@ if(isset($changeStausComp)) {
               $nResident->noti_ios("ComplaintsVC","",$society_id,$sos_user_token,"Your Complaint for $compalain_title is","$cStatus ",'complain');
             }
             // $nResident->noti("ComplainFragment","",$society_id,$sos_user_token,"Your Complain for $compalain_title is","$cStatus ",'complain');
-
-            $notiAry = array(
-            'society_id'=>$society_id,
-            'user_id'=>$data_notification['user_id'],
-            'notification_title'=>"Your Complaint for $compalain_title is",
-            'notification_desc'=>"$cStatus ",    
-            'notification_date'=>date('Y-m-d H:i'),
-            'notification_action'=>'complain',
-             'notification_logo'=>'Comp.png',
-            );
-            $d->insert("user_notification",$notiAry);
 
     $_SESSION['msg']="Complain Status Updated";
             $d->insert_log("$society_id","$bms_admin_id","$created_by","Complaint Status Updated");
@@ -132,7 +83,6 @@ if (isset($addComplaint)) {
 
     $m->set_data('society_id',$society_id);
     $m->set_data('complain_no',"CN".$complain_id);
-    $m->set_data('complain_id',$complain_id);
     $m->set_data('unit_id',$unitData['unit_id']);
     $m->set_data('complain_assing_to',$block_no);
     $m->set_data('user_id',$user_id);
@@ -141,7 +91,6 @@ if (isset($addComplaint)) {
     $m->set_data('compalain_title',$compalain_title);
     $m->set_data('complain_description',$complain_description);
     $m->set_data('complain_date',$complain_date);
-    $m->set_data('admin_id',$bms_admin_id);
 
 
     $a2 = array(
@@ -161,20 +110,6 @@ if (isset($addComplaint)) {
     $q2 = $d->insert("complains_master",$a2);
      $complain_id = $con->insert_id;
 
-    $a3 = array(
-      'complains_track_by'=>1,
-      'society_id'=>$m->get_data('society_id'),
-      'complains_track_msg'=>$m->get_data('compalain_title'),
-      'complains_track_img'=>$m->get_data('complain_photo'),
-      'complain_id'=>$m->get_data('complain_id'),
-      'admin_id'=>$m->get_data('admin_id'),
-      'complains_track_date_time'=>$m->get_data('complain_date'),
-      'complaint_status_view'=>"Open",
-
-    );
-
-    $q2 = $d->insert("complains_track_master",$a3);
-
 
     if($q2==TRUE) {
       $qUserToken=$d->select("users_master","society_id='$society_id' AND user_id='$user_id'");
@@ -187,19 +122,6 @@ if (isset($addComplaint)) {
       }  else if($device=='ios') {
         $nResident->noti_ios("ComplaintsVC","",$society_id,$sos_user_token,"Your Complaint for $compalain_title is Registered","Complaint Registered Successfully by $created_by",'complain');
       }
-
-      $notiAry = array(
-        'society_id'=>$society_id,
-        'user_id'=>$data_notification['user_id'],
-        'notification_title'=>"Your Complaint for $compalain_title is Registered",
-        'notification_desc'=>"Complaint Registered Successfully by $created_by",    
-        'notification_date'=>date('Y-m-d H:i'),
-        'notification_action'=>'complain',
-        'notification_logo'=>'Comp.png',
-
-      );
-      $d->insert("user_notification",$notiAry);
-
 
       $_SESSION['msg']="Complaint Added";
       header("Location: ../complaints");

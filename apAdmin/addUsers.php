@@ -125,36 +125,6 @@
                     <option value="0">No</option>
                   </select>
                 </div>
-                <label for="allowed_products" class="col-sm-2 col-form-label" id="allowed_products_label" style="display: none;">Allowed Products</label>
-                <div class="col-sm-4 allowed-products-wrap" style="display: none;" >
-                  <select class="form-control multiple-select" id="allowed_products" name="allowed_products[]" multiple="multiple">
-                    <option value="1">MyCo HRMS</option>
-                    <option value="2">MyCo CRM</option>
-                    <option value="3">Smart Society</option>
-                    <option value="4">My Association</option>
-                    <option value="5">Other</option>
-                    <option value="6">MyCo White Label</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group row">
-                <label for="allowed_platforms" class="col-sm-2 col-form-label" id="allowed_platforms_label" style="display: none;">Allowed Platforms</label>
-                <div class="col-sm-4 allowed-platforms-wrap" style="display: none;" >
-                  <select class="form-control multiple-select" id="allowed_platforms" name="allowed_platforms[]" multiple="multiple">
-                    <option value="0">Backend/Api</option>
-                    <option value="1">Frontend/web</option>
-                    <option value="2">App</option>
-                    <option value="4">QA</option>
-                  </select>
-                </div>
-                <label for="developer_permissions" class="col-sm-2 col-form-label" id="developer_permissions_label" style="display: none;">Developer Permissions</label>
-                <div class="col-sm-4 developer-permissions-wrap" style="display: none;" >
-                  <select class="form-control multiple-select" id="developer_permissions" name="developer_permissions[]" multiple="multiple">
-                    <option value="0">Change Patch Status &amp; Date</option>
-                    <option value="1">Change Developer</option>
-                    <option value="2">Change Development Status</option>
-                  </select>
-                </div>
               </div>
               <div class="form-group row">
                 <label class="col-sm-2 col-form-label">Bind MyCo User</label>
@@ -204,17 +174,6 @@
 <script src="assets/js/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
-  function toggleDeveloperFields() {
-    var isDeveloper = $('#is_developer').val();
-    var show = (isDeveloper == '1');
-    $('#allowed_products_label, #allowed_platforms_label, #developer_permissions_label').toggle(show);
-    $('.allowed-products-wrap, .allowed-platforms-wrap, .developer-permissions-wrap').toggle(show);
-    $('#allowed_products, #allowed_platforms, #developer_permissions').prop('required', false);
-    if (!show) {
-      $('#allowed_products, #allowed_platforms, #developer_permissions').val(null).trigger('change');
-    }
-  }
-
   function syncMycoUserBindFields() {
     var $opt = $('#myco_user_bind option:selected');
     if (!$opt.val()) {
@@ -227,9 +186,7 @@ $(document).ready(function(){
     $('#bind_department_name').val($opt.data('department-name') || '');
   }
 
-  $("#is_developer").change(toggleDeveloperFields);
   $('#myco_user_bind').on('change', syncMycoUserBindFields);
-  toggleDeveloperFields();
   syncMycoUserBindFields();
 });
 </script>

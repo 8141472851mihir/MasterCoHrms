@@ -368,43 +368,6 @@ $().ready(function () {
 
     });
 
-    //IS_914 //2march2020 -new
-
-    $("#addPackage").validate({
-        errorPlacement: function (error, element) {
-            if (element.parent('.input-group').length) {
-                error.insertAfter(element.parent());      // radio/checkbox?
-            } else if (element.hasClass('select2-hidden-accessible')) {
-                error.insertAfter(element.next('span'));  // select2
-                element.next('span').addClass('error').removeClass('valid');
-            } else {
-                error.insertAfter(element);               // default
-            }
-        },
-        rules: {
-            app_package_name: {
-                required: true,
-                noSpace: true
-            }
-
-        },
-        messages: {
-            app_package_name: {
-                required: "Please Enter Name",
-            }
-
-
-        },
-        submitHandler: function (form) {
-            $(':input[type="submit"]').prop('disabled', true);
-            $(".ajax-loader").show();
-            form.submit();
-        }
-
-    });
-
-
-
     $("#personal-info2").validate({
         errorPlacement: function (error, element) {
             if (element.parent('.input-group').length) {
