@@ -509,18 +509,6 @@ $societyQuery = $d->selectRow(
                                             <div class="col-7 px-2"><?= $society['currency'] ?></div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 pl-md-3 border-left">
-                                        <div class="row">
-                                            <div class="col-5 fw-bold text-dark px-1">Group Chat Status
-                                                <span class="float-right">:</span>
-                                            </div>
-                                            <div class="col-7 px-2">
-                                                <?= isset($society['group_chat_status'])
-                                                    ? ($society['group_chat_status'] == 1 ? 'Deactive' : 'Active')
-                                                    : '' ?>
-                                            </div>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6 pl-md-3">
                                         <div class="row">
                                             <div class="col-5 fw-bold text-dark px-1">Visitor

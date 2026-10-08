@@ -82,19 +82,6 @@ if(isset($_POST['checkSocietyEmail'])){
 
   }
 
-  extract(array_map("test_input" , $_POST));
-  if(isset($_POST['checkUserEmp'])){
-    $q=$d->select("employee_master","emp_mobile='$emp_mobile' AND emp_type_id =0");
-    $data=mysqli_fetch_array($q);
-    if ($data>0) {
-       echo 1;
-    } else {
-      echo 0;
-    }
-
-  }
-
-
 }
 
  ?>

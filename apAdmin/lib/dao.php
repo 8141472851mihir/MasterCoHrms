@@ -606,10 +606,8 @@ class dao implements interface1
     function get_inquiry_emails($inquiry_type=null){
         $to = "";
         if($inquiry_type==1){
-            // $to = "priyank.shah@chplgroup.org,mehulinfo997@gmail.com,contact@my-company.app,nikhil.saggam@chplgroup.org,harshad.hadiya@chplgroup.org,parvez.shaikh@chplgroup.org,mycosupport@chlgroup.org,vineet.tripathi@chlgroup.org, sachin.sreekumar@chlgroup.org ";
             $to = "patelmihir0430@gmail.com";
         }else if($inquiry_type==2){
-            // $to = "mycosupport@chplgroup.org";
             $to = "patelmihir0430@gmail.com";
         }
         return $to;
@@ -1826,10 +1824,6 @@ class dao implements interface1
 
     function ios_url() {
         return EnvLoader::get('IOS_URL');
-    }
-
-    function support_url() {
-        return EnvLoader::get('SUPPORT_URL');
     }
 
     function company_url() {

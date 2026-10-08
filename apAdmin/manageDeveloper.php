@@ -30,50 +30,22 @@
                             <th class=''>#</th>
                             <th>Name</th>
                             <th>Technology</th>
-                            <th>Email</th>
-                            <th>Mobile No</th>
                           </tr>
                         </thead>
                         <tbody>
                           <?php
-                          $curl = curl_init();
-                          curl_setopt_array($curl, array(
-                            CURLOPT_URL => $d->support_url().'adminController.php',
-                            CURLOPT_RETURNTRANSFER => true,
-                            CURLOPT_ENCODING => '',
-                            CURLOPT_MAXREDIRS => 10,
-                            CURLOPT_TIMEOUT => 0,
-                            CURLOPT_FOLLOWLOCATION => true,
-                            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                            CURLOPT_CUSTOMREQUEST => 'POST',
-                            CURLOPT_POSTFIELDS => array('getAdminList' => 'getAdminList', 'bug_platform_id' => '0'),
-                            CURLOPT_HTTPHEADER => array(
-                              'Cookie: PHPSESSID=00l5h8m23lu92oclec56tfokqd'
-                            ),
-                          ));
-                          $response = curl_exec($curl);
-                          curl_close($curl);
-                          $developers = json_decode($response, true);
-                          if (!empty($developers)) {
-                            $i = 1;
-                            foreach ($developers['list'] as $data) {
+                          $tech_map = [1 => "IOS", 2 => "Web", 3 => "Android", 4 => "Flutter", 5 => "QA"];
+                          $q = $d->select("developer_master", "delete_status=0", "ORDER BY developer_id DESC");
+                          $i = 1;
+                          while ($data = mysqli_fetch_array($q)) {
                               ?>
                               <tr>
                                 <td><?php echo $i++; ?></td>
-                                <td><?php echo $data['admin_name'] ?></td>
-                                <td>
-                                  <?php
-                                  $tech_map = [1 => "Android", 2 => "IOS", 3 => "Web", 4 => "Api", 5 => "Flutter", 6 => "QA"];
-                                  echo implode(', ', array_map(fn($p) => $tech_map[(int)$p] ?? '', explode(',', $data['bug_platform'])));
-                                  ?>
-                                </td>
-                                <td><?php echo $data['admin_mail'] ?></td>
-                                <td><?php echo $data['admin_mobile'] ?></td>
+                                <td><?php echo $data['developer_name']; ?></td>
+                                <td><?php echo $tech_map[(int)$data['developer_technology']] ?? ''; ?></td>
                               </tr>
                               <?php
-                            }
                           }
-                          
                           ?>
                         </tbody>
                       </table>

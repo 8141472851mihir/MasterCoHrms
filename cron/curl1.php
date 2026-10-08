@@ -48,9 +48,9 @@
         $support_country_code = $societydetails['support_country_code'];
         $support_mobile_no = $societydetails['support_mobile_no'];
 
-        $supportPerson = $support_name != '' ? $support_name : 'Abhishek Doshi';
-        $supportNumber = $support_mobile_no != '' ? $support_country_code.$support_mobile_no : '+919909945983';
-        $supportEmail = 'mycosupport@chplgroup.org';
+        $supportPerson = $support_name;
+        $supportNumber = $support_country_code.$support_mobile_no;
+        $supportEmail = '';
 
         $sub_domain = $societydetails['sub_domain'];
 

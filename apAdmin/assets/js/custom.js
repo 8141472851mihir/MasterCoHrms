@@ -739,52 +739,6 @@ function editBlock(block_id, block_name, block_sort) {
 }
 
 
-function editParking(parking_id, parking_name, society_parking_id) {
-    $('#parking_id').val(parking_id);
-    $('#oldParkingName').val(parking_name);
-    $('#society_parking_id').val(society_parking_id);
-}
-
-function addParking(parking_id, Type, parking_name, society_parking_id) {
-    $('#P_id').val(parking_id);
-    $('#sParking_id').val(society_parking_id);
-    $('#pType').html(Type);
-    $('#CappType').html(Type);
-    $('#parkingName').html(parking_name);
-}
-
-function updateParking(parking_id, Type, parking_name, society_parking_id, unit_id) {
-    $('.P_id11').val(parking_id);
-    $('.sParking_id1').val(society_parking_id);
-    $('.unitId').val(unit_id);
-    $('#pType1').html(Type);
-    //IS_607
-    $('#UpCappType').html(Type);
-    $('#parkingName1').html(parking_name);
-    $.ajax({
-        url: "getParkingDetails.php",
-        cache: false,
-        type: "POST",
-        data: { unit_id: unit_id, UpCappType: Type, parking_id: parking_id, csrf: csrf },
-        success: function (response) {
-            $('#getParkingDetails').html(response);
-        }
-    });
-}
-
-function approveParking(parking_id, Type, parking_name, society_parking_id, unit_id) {
-
-    $.ajax({
-        url: "getParkingDetailsPending.php",
-        cache: false,
-        type: "POST",
-        data: { unit_id: unit_id, Type: Type, parking_name: parking_name, society_parking_id: society_parking_id, parking_id: parking_id, csrf: csrf },
-        success: function (response) {
-            $('#pendingParkingDiv').html(response);
-        }
-    });
-}
-
 function checkMobileSociety() {
     var secretary_mobile = $('#secretary_mobile').val();
 
@@ -1071,63 +1025,6 @@ function checkemailSocietyEdit() {
         document.getElementById("socAddBtn").disabled = false;
     }
 }
-
-
-function checkMobileEmp() {
-    var emp_mobile = $('#empNumber').val();
-
-    $.ajax({
-        url: "controller/uniqueController.php",
-        cache: false,
-        type: "POST",
-        data: { emp_mobile: emp_mobile, checkUserEmp: 'checkUserEmp', csrf: csrf },
-        success: function (response) {
-            if (response == 1) {
-                document.getElementById("socAddBtn").disabled = true;
-                Lobibox.notify('error', {
-                    pauseDelayOnHover: true,
-                    continueDelayOnInactiveTab: false,
-                    position: 'top right',
-                    icon: 'fa fa-times-circle',
-                    msg: 'This mobile number is Already Used.'
-                });
-
-            } else {
-                document.getElementById("socAddBtn").disabled = false;
-            }
-        }
-    });
-}
-
-
-function checkMobileEmpEdit() {
-    var emp_mobile = $('#empNumber').val();
-    var empNumberOld = $('#empNumberOld').val();
-    if (empNumberOld != emp_mobile) {
-        $.ajax({
-            url: "controller/uniqueController.php",
-            cache: false,
-            type: "POST",
-            data: { emp_mobile: emp_mobile, checkUserEmp: 'checkUserEmp', csrf: csrf },
-            success: function (response) {
-                if (response == 1) {
-                    document.getElementById("socAddBtn").disabled = true;
-                    Lobibox.notify('error', {
-                        pauseDelayOnHover: true,
-                        continueDelayOnInactiveTab: false,
-                        position: 'top right',
-                        icon: 'fa fa-times-circle',
-                        msg: 'This mobile number is Already Used.'
-                    });
-
-                } else {
-                    document.getElementById("socAddBtn").disabled = false;
-                }
-            }
-        });
-    }
-}
-
 
 
 function checkMobileUserEdit() {
@@ -1453,7 +1350,7 @@ function hideData() {
 
 }
 
-$(".onlyNumber,#secretary_mobile,#trlDays,#emp_sallary,#no_of_option,#month_working_days,#working_days,#leave_days,#no_of_person,#no_of_month,#expAmoint,#no_of_unit_bill,#no_of_unit,#no_of_blocks,#no_of_floor,#emrNumber,#userMobile,#ownerMobile,#empNumber,#cMobile,#editMobile1,#noofCar,#noofBike,#person_limit_day,#person_limit").keydown(function (e) {
+$(".onlyNumber,#secretary_mobile,#trlDays,#no_of_option,#month_working_days,#working_days,#leave_days,#no_of_person,#no_of_month,#expAmoint,#no_of_unit_bill,#no_of_unit,#no_of_blocks,#no_of_floor,#emrNumber,#userMobile,#ownerMobile,#cMobile,#editMobile1,#noofCar,#noofBike,#person_limit_day,#person_limit").keydown(function (e) {
     // Allow: backspace, delete, tab, escape, enter and .
     if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
         // Allow: Ctrl+A, Command+A

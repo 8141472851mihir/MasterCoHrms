@@ -1,7 +1,5 @@
 <?php
 include_once 'lib.php';
-include_once '../apAdmin/lib/crmconfig.php';
-
 $_POST = json_decode($d->manage_decryption("1", file_get_contents("php://input")), true);
 $compress = resolve_api_compress();
 // $_POST =  $d->manage_encryption("1", $_POST);
@@ -100,18 +98,6 @@ try {
                 exit();
             }
         } else if ($_POST['addFeedback'] == "addFeedback") {
-            $to = "yuvraj@chplgroup.org";
-            $cc = "bhavesh@chplgroup.org";
-            $subject = $subject;
-            $message = "<table>
-            <tr>Name : $name</tr>
-            <tr>Email : $email</tr>
-            <tr>Mobile : $mobile</tr>
-            <tr>City : $city</tr>
-            <tr>Message : </tr>
-            <p>$message</p>
-            </table>";
-            include '../apAdmin/mail.php';
             $m->set_data('name', $name);
             $m->set_data('email', $email);
             $m->set_data('mobile', $mobile);
@@ -132,62 +118,6 @@ try {
 
             $insert = $d->insert("contact_us", $value_array);
             if ($insert > 0) {
-                $names = explode(" ", $name);
-                $firstName = ucfirst(strtolower($names[0]));
-                $lastName = "";
-                for ($i = 1; $i <= count($names); $i++) {
-                    $lastName .= ucfirst(strtolower($names[$i])) . " ";
-                }
-                $country = $d->sanitizeActionIdAsInt($country);
-                $country_q = $d->selectRow("name,phonecode", "countries", "country_id='$country'");
-                $countrydata = mysqli_fetch_array($country_q);
-                $countrycode = $countrydata["phonecode"];
-                $selectedcountry = $countrydata["name"];
-                $countryCode = str_replace("+", "", $countrycode);
-                $finalcode = explode("-", $countryCode);
-                $countryCode = $finalcode[0];
-                $leadata["leads"][0]["firstName"] = trim($firstName);
-                $leadata["leads"][0]["lastName"] = trim($lastName);
-                $leadata["leads"][0]["designation"] = "";
-                $leadata["leads"][0]["email"] = $email;
-                $leadata["leads"][0]["countryCode"] = $countryCode;
-                $leadata["leads"][0]["mobile"] = $mobile;
-                $leadata["leads"][0]["phoneCountryCode"] = $countryCode;
-                $leadata["leads"][0]["phone"] = $mobile;
-                $leadata["leads"][0]["expectedRevenue"] = "";
-                $leadata["leads"][0]["description"] = $_POST['message'];
-                $leadata["leads"][0]["companyName"] = $company_name;
-                $leadata["leads"][0]["companyState"] = "";
-                $leadata["leads"][0]["companyStreet"] = "";
-                $leadata["leads"][0]["companyCity"] = $city;
-                $leadata["leads"][0]["companyCountry"] = $selectedcountry;
-                $leadata["leads"][0]["companyPincode"] = "";
-                $leadata["leads"][0]["leadPriority"] = "1";
-                if ($partner_id == 1) { // USA CRM
-                    $crmauthToken = "HVMsmi9WE5PfJ9B68IFuqg==.Em7ChCXb/i6BdO39sLhSwg==";
-                }
-                $curl1 = curl_init();
-
-                curl_setopt_array($curl1, array(
-                    CURLOPT_URL => $crmurl,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => json_encode($leadata),
-                    CURLOPT_HTTPHEADER => array(
-                        'authToken: ' . $crmauthToken,
-                        'Content-Type: application/json'
-                    ),
-                ));
-
-                $crmresponse = curl_exec($curl1);
-                file_put_contents('log.txt', date('Y-m-d H:i:s') . "\n" . $crmresponse . "\n", FILE_APPEND);
-                $code = curl_getinfo($curl1, CURLINFO_HTTP_CODE);
-                curl_close($curl1);
                 $response["message"] = $xml->string->thank_you_for_your_feedback . '';
                 $response["status"] = "200";
                 echo $d->manage_encryption($is_encrypted, $response, $compress);

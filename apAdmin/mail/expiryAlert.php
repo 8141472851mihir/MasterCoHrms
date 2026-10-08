@@ -81,7 +81,7 @@ $message = "
             <p><b>Hi $secretary_name,</b></p>
                 <p>We hope you've been enjoying your experience with " . $d->app_name() . "!<br>
                 We wanted to remind you that your subscription for <b> $society_name_new ($fullSocietyId)</b> is $expiry_text. To continue uninterrupted service, please get in touch with us to renew your subscription.</p>
-                <p>You can reach us at +916358164211 or contact our support team at mycosupport@chplgroup.org to start the renewal process. We’re here to help with any questions you may have!</p>
+                <p>Please get in touch to start the renewal process.</p>
                 <p>Thanks for choosing <b>" . $d->app_name() . "</b> we look forward to continuing to support you.</p>
             <p>Warm regards,</p>
             <p><b>The " . $d->app_name() . " Team</b></p>

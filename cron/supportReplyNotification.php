@@ -67,12 +67,6 @@ if (mysqli_num_rows($q) > 0) {
             'hide_to_user' => '0'
         );
 
-        $ticket_id = $feedback_id;
-        $reply_message = $reply;
-        $feedback_status = $feedback_status;
-        $user_mobile_no = $user_mobile;
-        include '../feedbackFcmCurl.php';
-
         $insertReply = $d->insert("feedback_log_master", $a1);
 
         $d->insert_log_specific("$society_id", "$admin_id", "$created_by", "Feedback #TKT$feedback_id Reply", "6");

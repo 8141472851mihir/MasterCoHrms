@@ -9,15 +9,6 @@ include '../common/objectController.php';
 				$fcmArrayIos = $d->get_admin_fcm("bms_admin_master", "token!='' AND society_id='$society_id' AND device!='android'");
 				$nAdmin->noti("$notiUrl", $fcmArray, $title,$description, "");
 				$nAdmin->noti_ios("$notiUrl", $fcmArrayIos, $title, $description, "");
-			}else if($sendto=='Guards'){				
-				$qGaurdToken=$d->select("employee_master","emp_type_id='0' AND society_id='$society_id'");
-                while($data_Gaurd=mysqli_fetch_array($qGaurdToken)) {
-                    $blocksIdAry = explode(",",$data_Gaurd['blocks_id']);
-                    $sos_Gaurd_token=$data_Gaurd['emp_token'];
-                    if ($sos_Gaurd_token!='') {
-                        $nGaurd->noti("",$sos_Gaurd_token,$title,$description,"",$m);
-                    }
-                }
 			}else if($sendto=='Users'){
 				$clickAray = array(
 					'title' => $title,
@@ -55,5 +46,4 @@ include '../common/objectController.php';
 			$reArray = array('status'=>'200','message'=>'Notification Send');
 		}else{ $reArray = array('status'=>'201','message'=>'Please Complete All Mandatory Fields.'); }
 	}else{ $reArray = array('status'=>'201','message'=>'Wrong Tag.'); }
-}else{ $reArray = array('status'=>'201','message'=>'Invalid request.'); }
 echo json_encode($reArray);

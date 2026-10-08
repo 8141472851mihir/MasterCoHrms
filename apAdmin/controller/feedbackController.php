@@ -90,11 +90,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
             $a1['hide_to_user'] = '1';
         } else {
             $a1['hide_to_user'] = '0';
-            $ticket_id = $feedback_id;
-            $reply_message = $reply;
-            $feedback_status = $feedback_status;
-            $user_mobile_no = $agent_mobile;
-            include '../feedbackFcmCurl.php';
         }
         $d->insert("feedback_log_master", $a1);
 
@@ -225,31 +220,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
         $feedback_msg = $agentDetails['feedback_msg'];
         $feedback_id = $agentDetails['feedback_id'];
         $platform = $agentDetails['platform'];
-        $file1 = $file2 = $file3 = $file4 = "";
-        if ($attachment != "") {
-            $file1 = $base_url . "img/fin_support/" . $attachment;
-        }
-        if ($attachment_2 != "") {
-            $file2 = $base_url . "img/fin_support/" . $attachment_2;
-        }
-        if ($video != "") {
-            $file3 = $base_url . "img/fin_support/" . $video;
-        }
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $d->support_url() . 'taskController.php',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array('add_feedback' => 'add_feedback', 'feedback_id' => $feedback_id, 'bug_platform' => $platform, 'title' => $subject, 'description' => $feedback_msg, 'bug_screen' => 'App Support Page', 'bug_app' => 'mycompany', 'bug_version' => 'Production', 'file1' => $file1, 'file2' => $file2, 'file3' => $file3, 'file4' => $file4),
-            CURLOPT_HTTPHEADER => array(),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
 
         $m->set_data('feedback_id', $feedback_id);
         $m->set_data('society_id', $society_id);
@@ -314,21 +284,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
                 'developer_solve_time' => date('Y-m-d H:i:s'),
             );
             $q = $d->update("feedback_master", $a, "feedback_id='$feedback_id'");
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $d->support_url() . 'taskController.php',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array('feedback_id' => $feedback_id, 'reject_feedback' => 'reject_feedback', 'attahment' => $reject_attachment, 'remarks' => $resion),
-                CURLOPT_HTTPHEADER => array(),
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
             $reply = $resion;
             $q = $d->selectRow("feedback_master.*,bms_admin_master.*,feedback_master.created_by AS feedback_created_by", "feedback_master LEFT JOIN bms_admin_master ON  feedback_master.created_by=bms_admin_master.admin_id", "feedback_master.feedback_id='$feedback_id'");
             $agentDetails = mysqli_fetch_array($q);
@@ -430,7 +385,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
                 exit();
             }
             $attachment = $upload['filename'];
-            $attachmentFile = $attachment !== '' ? ($base_url . 'img/fin_support/' . $attachment) : '';
             $close_date = date('Y-m-d H:i:s');
 
             $a = array(
@@ -442,22 +396,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
                 'issueType' => $issue_type,
             );
 
-            if ($issue_type != '1' && $issue_type != '6') {
-                $bug_type = '';
-            } else {
-                $bug_type = 'Bug';
-            }
-            $route_type = match ((int) $issue_type) {
-                1 => "1",
-                2 => "2",
-                3 => "3",
-                4 => "4",
-                5 => "5",
-                6 => "7",
-                7 => "8",
-                9 => "9",
-                default => "6"
-            };
             $q = $d->update("feedback_master", $a, "feedback_id='$feedback_id'");
 
             $close_date = date('d-m-Y H:i:s');
@@ -465,23 +403,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
             if ($to != "") {
                 include '../mail/ticketClose.php';
                 include '../mail.php';
-            }
-            if ($q > 0) {
-                $curl = curl_init();
-                curl_setopt_array($curl, array(
-                    CURLOPT_URL => $d->support_url() . 'taskController.php',
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 0,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST => 'POST',
-                    CURLOPT_POSTFIELDS => array('feedback_id' => $feedback_id, 'close_feedback' => 'close_feedback', 'remarks' => $reply, 'bug_type' => $bug_type, "route_type" => $route_type),
-                    CURLOPT_HTTPHEADER => array(),
-                ));
-                $response = curl_exec($curl);
-                curl_close($curl);
             }
             $agent_name = $query_data['name'];
             $agent_mobile = $query_data['mobile'];
@@ -510,13 +431,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
             );
             $d->insert("feedback_log_master", $a1);
 
-            $ticket_id = $feedback_id;
-            $reply_message = $reply;
-            $feedback_status = '5';
-            $user_mobile_no = $agent_mobile;
-            include '../feedbackFcmCurl.php';
-
-
             if ($q == TRUE) {
 
                 $hit_url = $query_data['sub_domain'] ?? '';
@@ -532,7 +446,7 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
                         'title' => $noti_title,
                         'description' => $noti_description,
                         'society_id' => $society_id,
-                        'mobile_no' => $user_mobile_no,
+                        'mobile_no' => $agent_mobile,
                         'feedback_id' => $feedback_id,
                     );
                     $d->callCompanyApiEnc($hit_url, 'sendNotificationCurlController.php', $post);
@@ -841,32 +755,11 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
                 'feedback_added_by' => $m->get_data('feedback_added_by'),
             );
             $d->insert("feedback_log_master", $a12);
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $d->support_url() . 'taskController.php',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'POST',
-                CURLOPT_POSTFIELDS => array('reopen_feedback' => 'reopen_feedback', 'feedback_id' => $feedback_id, 'remark' => $reopen_remarks),
-                CURLOPT_HTTPHEADER => array(),
-            ));
-            $response = curl_exec($curl);
-            curl_close($curl);
 
             $d->insert_log_specific("$society_id", "$bms_admin_id", "$created_by", "Query #TKT$feedback_id Ticket Reopen", "6");
             $_SESSION['msg'] = "Query #TKT$feedback_id Ticket Reopen Successfully.";
             $q = $d->select("feedback_master", "feedback_id=$feedback_id");
             $data = mysqli_fetch_array($q);
-            $agent_mobile = $data['mobile'];
-            $ticket_id = $feedback_id;
-            $reply_message = $reopen_remarks;
-            $feedback_status = '0';
-            $user_mobile_no = $agent_mobile;
-            include '../feedbackFcmCurl.php';
             $feedback_created_by = $data['created_by'];
             $has_permission = $d->count_data_direct("fcm_id", "admin_fcm_notification_master", "bms_admin_id='$feedback_created_by' AND fcm_notifications='6' AND active_status='0'");
             if ($feedback_created_by != $bms_admin_id && $feedback_created_by > 0 && $has_permission > 0) {
@@ -936,21 +829,6 @@ LEFT JOIN society_master_white_label wl ON wl.society_id = feedback_master.socie
     } else if (isset($editFeedbackPlatform) && $editFeedbackPlatform == 'editFeedbackPlatform') {
         $a = array('platform' => $platform, 'module_type' => $module_type);
         $q = $d->update("feedback_master", $a, "feedback_id='$feedback_id'");
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => $d->support_url() . 'taskController.php',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array('changePlatform' => 'changePlatform', 'feedback_id' => $feedback_id, 'platform_id' => $platform),
-            CURLOPT_HTTPHEADER => array(),
-        ));
-        $response = curl_exec($curl);
-        curl_close($curl);
         if ($q == TRUE) {
             $_SESSION['msg'] = "Feedback platform updated";
             $d->insert_log_specific("$society_id", "$bms_admin_id", "$created_by", "Feedback #TKT$feedback_id platform updated", "6");

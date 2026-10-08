@@ -79,7 +79,7 @@ $message = "
             <div class='email-content'>
                 <p><b>Dear $secretary_name,</b></p>
                 <p>We hope this message finds you well. This is a courteous reminder that your subscription for <b>$societyName ($fullSocietyId)</b> with us has expired as <b>$expired_date</b>. In accordance with our data retention policy, $remainingTimeMessage After this date, we will no longer be able to retrieve any of your stored data.</p>
-                <p>If you wish to retain your data or renew your subscription, $stepsDeadlineMessage. For assistance, kindly contact our support team at mycosupport@chplgroup.org.</p>
+                <p>If you wish to retain your data or renew your subscription, $stepsDeadlineMessage.</p>
                 <p>Thank you for your prompt attention to this matter.</p>
                 <p>Warm regards,</p>
                 <p><b>The " . $d->app_name() . " Team</b></p>
